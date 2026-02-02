@@ -16,6 +16,8 @@ Usages Notes :
  - Investigate and resolve any discrepancies found during the checks.
 ==========================================================================================
 */
+
+
 --========================================================================================
 --Checking Silver.crm_cust_info ;
 --========================================================================================
@@ -36,6 +38,7 @@ where cst_lastname != trim(cst_lastname);
 --data standardization & consistency 
 select distinct cst_gndr from bronze.crm_cust_info;
 select distinct cst_marital_status from bronze.crm_cust_info;
+
 
 --========================================================================================
 --Checking silver.crm_prod_info ;
@@ -64,6 +67,7 @@ select distinct prd_line from silver.crm_prod_info;
 --Expected : No result 
 select prd_start_dt,prd_end_dt from silver.crm_prod_info
 where prd_end_dt < prd_start_dt;
+
 
 --========================================================================================
 --Checking silver.crm_sales_details 
@@ -100,6 +104,7 @@ sls_sales <=0  or sls_quantity <= 0
 or sls_price <= 0 
 order by sls_sales, sls_quantity,sls_price;
 
+
 --========================================================================================
 --Checking silver.erp_cust_az12 
 --========================================================================================
@@ -112,6 +117,7 @@ where bdate < '1926-01-01' or bdate > now();
 select distinct gen from silver.erp_cust_az12;
 select * from silver.erp_cust_az12;
 
+
 --========================================================================================
 --Checking silver.erp_loca101
 --========================================================================================
@@ -119,6 +125,7 @@ select * from silver.erp_cust_az12;
 select distinct cntry 
 from silver.erp_loca101;
 select * from silver.erp_loca101;
+
 
 --========================================================================================
 --Checking silver.erp_px_cat_g1v2
