@@ -83,8 +83,37 @@ sls_sales <=0  or sls_quantity <= 0
 or sls_price <= 0 
 order by sls_sales, sls_quantity,sls_price;
 
-select sls_ord_num from silver.crm_sales_details 
-where sls_ord_num != trim(sls_ord_num);
-select * from silver.crm_sales_details;
+--========================================================================================
+--Checking silver.erp_cust_az12 
+--========================================================================================
+--Idenetify out of range dates 
+--Expectation between 1926-01-01 and today 
+select bdate from silver.erp_cust_az12
+where bdate < '1926-01-01' or bdate > now();
 
+--data standardization and consitency 
+select distinct gen from silver.erp_cust_az12;
+select * from silver.erp_cust_az12;
+
+--========================================================================================
+--Checking silver.erp_loca101
+--========================================================================================
+--data standaerdization and cositency 
+select distinct cntry 
+from silver.erp_loca101;
+select * from silver.erp_loca101;
+
+--========================================================================================
+--Checking silver.erp_px_cat_g1v2
+--========================================================================================
+--check for unwanted spaces 
+--Expected : no result 
+select * from bronze.erp_px_cat_g1v2
+where cat !=trim(cat);
+
+select * from silver.erp_px_cat_g1v2 
+where subcat != trim(subcat) or maintenance != trim(maintenance);
+
+--Data standardization and consitency 
+select distinct maintenance from bronz.erp_cat_g1v2;
 
