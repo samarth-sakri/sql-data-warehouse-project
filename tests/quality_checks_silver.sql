@@ -24,20 +24,20 @@ Usages Notes :
 --checks for nulls or duplicates in a primary key 
 --Expectation :No result
 
-select cst_id,count(*) from bronze.crm_cust_info
+select cst_id,count(*) from silver.crm_cust_info
 group by cst_id 
 having count(*)> 1 or cst_id is null ;
 
 --Checks the unwanted spaces 
 --Expected : No result 
-select cst_firstname from bronze.crm_cust_info
+select cst_firstname from silver.crm_cust_info
 where cst_firstname  !=  trim(cst_firstname);
-select cst_lastname  from bronze.crm_cust_info
+select cst_lastname  from silver.crm_cust_info
 where cst_lastname != trim(cst_lastname);
 
 --data standardization & consistency 
-select distinct cst_gndr from bronze.crm_cust_info;
-select distinct cst_marital_status from bronze.crm_cust_info;
+select distinct cst_gndr from silver.crm_cust_info;
+select distinct cst_marital_status from silver.crm_cust_info;
 
 
 --========================================================================================
@@ -76,11 +76,11 @@ where prd_end_dt < prd_start_dt;
 --Exceptation : No Date Invalid 
 select 
 nullif(sls_ship_dt, 0) as sls_ship_dt
-from bronze.crm_sales_details
+from silver.crm_sales_details
 where sls_ship_dt <= 0 or length(cast(sls_ship_dt as text))!= 8 or sls_ship_dt > 20500101
 or sls_ship_dt <  19000101;
 
-select sls_order_dt from bronze.crm_sales_details
+select sls_order_dt from silver.crm_sales_details
 where  length(cast(sls_order_dt as text)) != 8
 or sls_order_dt > 20500101
 or sls_order_dt < 19000101;
@@ -132,12 +132,12 @@ select * from silver.erp_loca101;
 --========================================================================================
 --check for unwanted spaces 
 --Expected : no result 
-select * from bronze.erp_px_cat_g1v2
+select * from silver.erp_px_cat_g1v2
 where cat !=trim(cat);
 
 select * from silver.erp_px_cat_g1v2 
 where subcat != trim(subcat) or maintenance != trim(maintenance);
 
 --Data standardization and consitency 
-select distinct maintenance from bronz.erp_cat_g1v2;
+select distinct maintenance from silver.erp_cat_g1v2;
 
